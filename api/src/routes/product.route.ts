@@ -12,5 +12,5 @@ order.get('/order', orderController.getOrderByCustomersOrshippers)
 employee.get('/employee', employeeController.getOrderByPeriod)
 
 
-export{ product, order }
+export{ product, order, employee }
 
