@@ -14,15 +14,15 @@ class ProductController {
       const products = productMocks.filter(
         (product: productInterface) => product.supplierId === Number(supplierId)
       )
-    
+
       res.json({ products })
-    } else if(categoryId){
-        const products = productMocks.filter(
-        (product: productInterface) => product.categoryId=== Number(categoryId)
+    } else if (categoryId) {
+      const products = productMocks.filter(
+        (product: productInterface) => product.categoryId === Number(categoryId)
       )
-    
+
       res.json({ products })
-   }
+    }
   }
 }
 
