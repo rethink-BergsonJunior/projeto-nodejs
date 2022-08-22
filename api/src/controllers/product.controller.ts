@@ -1,25 +1,26 @@
-import { productMocks } from '../../database/mocks'
-import productInterface from '../interfaces/product.interface'
 import { Request, Response } from 'express'
+import knex from '../database/connection'
 
 class ProductController {
   constructor() {}
 
   async getProductsBySupplierOrCategory(req: Request, res: Response) {
-    const { categoryId, supplierId } = req.query
+    const { category, supplierId } = req.query
 
-    console.info({ categoryId, supplierId }, '{ categoryId, supplierId }')
+    console.info({ category, supplierId }, '{ category, supplierId }')
 
     if (supplierId) {
-      const products = productMocks.filter(
-        (product: productInterface) => product.supplierId === Number(supplierId)
-      )
+      const products = await knex
+        .select('*')
+        .from('products')
+        .where('supplier_ids', supplierId)
 
       res.json({ products })
-    } else if (categoryId) {
-      const products = productMocks.filter(
-        (product: productInterface) => product.categoryId === Number(categoryId)
-      )
+    } else if (category) {
+      const products = await knex
+        .select('*')
+        .from('products')
+        .whereLike('category', `%${category}%`)
 
       res.json({ products })
     }
