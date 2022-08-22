@@ -1,4 +1,3 @@
-
 import { Request, Response } from 'express'
 import { employeesMocks, ordersMocks } from '../../database/mocks'
 import OrderInterface from '../interfaces/order.interface'
@@ -9,8 +8,7 @@ import Employees from '../interfaces/employees.interface'
 
 class employeeController {
   constructor() {}
-   async getOrderByPeriod(req: Request, res: Response) {
-  
+  async getOrderByPeriod(req: Request, res: Response) {
     const { employeeId, orderDate } = req.query
 
     console.info({ employeeId, orderDate }, '{ employeeId, orderDate}')

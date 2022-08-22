@@ -12,4 +12,3 @@ export default interface Order {
   shipCity: String
   shipRegion: String
 }
-
