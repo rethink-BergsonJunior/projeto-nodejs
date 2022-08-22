@@ -1,28 +1,29 @@
-import { ordersMocks } from '../../database/mocks'
-import OrderInterface from '../interfaces/order.interface'
+
 import { Request, Response } from 'express'
+import knex from '../database/connection'
 
 class OrderController {
   constructor() {}
 
   async getOrderByCustomersOrshippers(req: Request, res: Response) {
-    const { customerId, shipVia } = req.query
+    const { customer_id, shipper_id } = req.query
 
-    console.info({ customerId, shipVia }, '{customerId, shipVia }')
+    console.info({ customer_id, shipper_id }, '{customer_id, shipper_id }')
 
-    if (customerId) {
-      const orders = ordersMocks.filter(
-        (order: OrderInterface) => order.customerId === customerId
-      )
-
-      res.json({ orders })
-    } else if (shipVia) {
-      const orders = ordersMocks.filter(
-        (order: OrderInterface) => order.shipVia === Number(shipVia)
-      )
+    if (customer_id) {
+     const orders = await knex
+        .select('*')
+        .from('orders')
+        .where('customer_id', customer_id)
 
       res.json({ orders })
-    }
+    } else if (shipper_id) {
+      const orders = await knex
+        .select('*')
+        .from('orders')
+        .where('shipper_id', shipper_id)
+      res.json({ orders })
+    } 
   }
 }
 
