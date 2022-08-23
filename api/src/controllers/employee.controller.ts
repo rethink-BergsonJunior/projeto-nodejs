@@ -1,33 +1,30 @@
 import { Request, Response } from 'express'
-import { employeesMocks, ordersMocks } from '../../database/mocks'
-import OrderInterface from '../interfaces/order.interface'
-import EmployeesInterface from '../interfaces/employees.interface'
-import Employees from '../interfaces/employees.interface'
-
-
+import knex from '../database/connection'
+import { employee } from '../routes/product.route'
 
 class employeeController {
   constructor() {}
   async getOrderByPeriod(req: Request, res: Response) {
-    const { employeeId, orderDate } = req.query
+    const {order_date} = req.query
 
-    console.info({ employeeId, orderDate }, '{ employeeId, orderDate}')
+    console.info({order_date }, '{order_date}')
 
-    if (orderDate) {
-      const orders = ordersMocks.filter(
-        (order:OrderInterface) =>order.employeeId === Number(employeeId)  
-      )
-      const employees = employeesMocks.filter((employee: EmployeesInterface) => employee.employeeId === Number(employeeId))
-        let  QtdPedido =0;
-      if(Number(orders) === Number(employees)){}
-           
-           QtdPedido +=1;
+    if (order_date) {
 
-          res.json({ QtdPedido })
+        const orders = await knex
+        .select('employee_id', 'order_date')
+        .from('orders')
+        .where('order_date', order_date)
+        .groupBy('employee_id').distinct()
+        .count('employee_id')
+
+
+
+      res.json({orders})
+
 
     }
-      
-    }
-   }
+  }
+}
 
-export default new  employeeController ()
+export default new employeeController()
