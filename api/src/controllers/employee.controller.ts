@@ -1,29 +1,26 @@
 import { Request, Response } from 'express'
 import knex from '../database/connection'
-import { employee } from '../routes/product.route'
 
 class employeeController {
   constructor() {}
-  async getOrderByPeriod(req: Request, res: Response) {
-    const {order_date} = req.query
-
-    console.info({order_date }, '{order_date}')
-
-    if (order_date) {
-
-        const orders = await knex
-        .select('employee_id', 'order_date')
-        .from('orders')
-        .where('order_date', order_date)
-        .groupBy('employee_id').distinct()
-        .count('employee_id')
 
 
+ 
+  async employees(req: Request, res: Response) {
+    
+    const { period } = req.body
+  
+    
+    console.info({ period }, 'period')
+    
+    const break_date = await knex
+   .select('employee_id')
+   .from('orders')
+   .andWhereBetween('order_date',[period.start_date,period.end_date])
+   .groupBy('employee_id')
+   .count('id')
 
-      res.json({orders})
-
-
-    }
+    res.json({ break_date })
   }
 }
 
