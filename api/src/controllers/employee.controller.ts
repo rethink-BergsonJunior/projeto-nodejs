@@ -1,16 +1,16 @@
-import { Request, Response } from 'express'
-import employeeServices from '../services/employee.services'
+import { Request, Response } from 'express';
+import employeeServices from '../services/employee.services';
 
 class employeeController {
-  constructor() {}
+	constructor() {}
 
-  async employees(req: Request, res: Response) {
-    const { period } = req.body
+	async employees(req: Request, res: Response) {
+		const { period } = req.body;
 
-    const data_period = await employeeServices(period)
+		const data_period = await employeeServices(period);
 
-    res.json({ data_period })
-  }
+		res.json({ data_period });
+	}
 }
 
-export default new employeeController()
+export default new employeeController();
