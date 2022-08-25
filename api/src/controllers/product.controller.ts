@@ -1,29 +1,16 @@
 import { Request, Response } from 'express'
 import knex from '../database/connection'
+import productServices from '../services/product.services'
 
 class ProductController {
   constructor() {}
 
   async getProductsBySupplierOrCategory(req: Request, res: Response) {
-    const { category, supplierId } = req.query
+    const { category, supplier_ids } = req.query
 
-    console.info({ category, supplierId }, '{ category, supplierId }')
+    const data_product = await productServices(category, supplier_ids)
 
-    if (supplierId) {
-      const products = await knex
-        .select('*')
-        .from('products')
-        .where('supplier_ids', supplierId)
-
-      res.json({ products })
-    } else if (category) {
-      const products = await knex
-        .select('*')
-        .from('products')
-        .whereLike('category', `%${category}%`)
-
-      res.json({ products })
-    }
+    res.json({ data_product })
   }
 }
 
