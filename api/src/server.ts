@@ -1,4 +1,4 @@
-import {product} from './routes/product.route'
+import { product } from './routes/product.route'
 import order from './routes/order.route'
 import employee from './routes/employee.route'
 import express, { Request, Response } from 'express'
