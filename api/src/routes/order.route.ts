@@ -20,6 +20,5 @@ if(queries.includes('customer_id') ||queries.includes('shipper_id')) {
 
  orderController.getOrderByCustomersOrshippers)
 
-order.get('/order', orderController.getOrderByCustomersOrshippers);
 
 export default order;

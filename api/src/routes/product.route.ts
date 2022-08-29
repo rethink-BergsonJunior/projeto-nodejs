@@ -1,6 +1,6 @@
-import { NextFunction, Router, Request, Response } from 'express'
-import productController from '../controllers/product.controller'
-import { query, validationResult } from 'express-validator'
+import { NextFunction, Router, Request, Response } from 'express';
+import productController from '../controllers/product.controller';
+import { query, validationResult } from 'express-validator';
 
 const product = Router();
 
@@ -21,7 +21,13 @@ product.get(
 	(req: Request, res: Response, next: NextFunction) => {
 		const errors = validationResult(req);
 		if (!errors.isEmpty()) {
-			return res.status(400).json({ errors: errors.array() });
+			const [error] = errors.array();
+			return next({
+				message: 'Erro de validação dos dados',
+				code: 55,
+				statusCode: 400,
+				error
+			});
 		}
 
 		next();

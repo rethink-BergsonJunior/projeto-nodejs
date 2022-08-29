@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import knex from '../database/connection';
 
 const productServices = async (category: any, supplier_ids: any) => {
+	// throw new Error('erro no product services');
 	if (supplier_ids) {
 		const products = await knex
 			.select('')
