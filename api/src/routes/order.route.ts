@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { Router,NextFunction,Request,Response } from 'express'
 import orderController from '../controllers/order.controller'
 import {query, validationResult} from 'express-validator'
@@ -20,12 +19,6 @@ if(queries.includes('customer_id') ||queries.includes('shipper_id')) {
 
 
  orderController.getOrderByCustomersOrshippers)
-=======
-import { Router } from 'express';
-import orderController from '../controllers/order.controller';
-
-const order = Router();
->>>>>>> 5e312a2c95ee1a91090b50a6a21465326eff6cba
 
 order.get('/order', orderController.getOrderByCustomersOrshippers);
 
