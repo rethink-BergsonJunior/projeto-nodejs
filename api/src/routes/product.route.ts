@@ -1,6 +1,8 @@
-import { NextFunction, Router, Request, Response } from 'express';
+import { NextFunction, Router, Request, Response} from 'express';
 import productController from '../controllers/product.controller';
 import { query, validationResult } from 'express-validator';
+const fs = require('fs');
+
 
 const product = Router();
 
@@ -32,7 +34,35 @@ product.get(
 
 		next();
 	},
-	productController.getProductsBySupplierOrCategory
+
+	productController.getProductsBySupplierOrCategory,
+
+	(req: Request, res: Response) => {
+		//mapear as informações
+		const data = JSON.stringify({
+			method: req.method,
+			route: req.url,
+			status: res.statusCode,
+			time: Date.now(),
+			request: req.query,
+			timestamp: Date(),
+			response: ''
+		});
+
+		//criar um arquivo com as informações
+		fs.writeFile(
+			'../api/src/logs/product.log/logProduct' + Date.now() + '.txt',
+			data,
+			function (err: any) {
+				if (err) throw err;
+				console.log('Saved!');
+			}
+		);
+	}
 );
 
+
+
+
 export default product;
+

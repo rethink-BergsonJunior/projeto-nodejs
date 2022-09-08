@@ -7,12 +7,13 @@ class OrderController {
 		next: NextFunction
 	) {
 		try {
-			// Erro forçado: throw new Error('Erro no conntroller de pedidos');
+			// Erro forçado: throw new Error('Erro no controller de pedidos');
 			const { customer_id, shipper_id } = req.query;
 
 			const data = await orderServices(customer_id, shipper_id);
 			res.json({ data });
 		} catch (err: any) {
+//registra o error e exibe para o usuario
 			const error = {
 				message: err.message,
 				code: 10,

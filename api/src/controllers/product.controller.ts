@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
-import knex from '../database/connection';
 import productServices from '../services/product.services';
+const fs = require('fs');
 
 class ProductController {
 	constructor() {}
@@ -18,6 +18,7 @@ class ProductController {
 			const data_product = await productServices(category, supplier_ids);
 
 			res.json({ data_product });
+
 		} catch (err: any) {
 			const error = {
 				message: err.message,

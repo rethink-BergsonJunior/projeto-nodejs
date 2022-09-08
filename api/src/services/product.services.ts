@@ -1,4 +1,3 @@
-import { Request, Response } from 'express';
 import knex from '../database/connection';
 
 const productServices = async (category: any, supplier_ids: any) => {

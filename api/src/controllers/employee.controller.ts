@@ -6,13 +6,16 @@ class employeeController {
 
 	async employees(req: Request, res: Response, next: NextFunction) {
 		try {
-			// Erro forçado: throw new Error('Erro no conntroller de empregados');
+			// Erro forçado: throw new Error('Erro no controller de empregados');
 			const { period } = req.body;
 
 			const data_period = await employeeServices(period);
 
 			res.json({ data_period });
+
+console.log(data_period)
 		} catch (err: any) {
+//registra o erro e retorna para o usuario
 			const error = {
 				message: err.message,
 				code: 10,

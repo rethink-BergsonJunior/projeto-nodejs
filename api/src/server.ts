@@ -4,6 +4,7 @@ import employee from './routes/employee.route';
 import express, { NextFunction, Request, Response } from 'express';
 import error from './error/handler';
 
+
 const server = express();
 
 server.use(express.json());
@@ -11,6 +12,7 @@ server.use(express.json());
 server.use(product);
 server.use(order);
 server.use(employee);
+
 
 server.get('/teste', (request: Request, response: Response) => {
 	console.log(request.query, 'request.query');
