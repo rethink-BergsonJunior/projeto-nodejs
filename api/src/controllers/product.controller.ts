@@ -17,8 +17,10 @@ class ProductController {
 
 			const data_product = await productServices(category, supplier_ids);
 
-			res.json({ data_product });
+			res.locals.data_product = data_product;
 
+			//chama middleware do log
+			next();
 		} catch (err: any) {
 			const error = {
 				message: err.message,

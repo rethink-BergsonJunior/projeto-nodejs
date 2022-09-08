@@ -11,9 +11,12 @@ class OrderController {
 			const { customer_id, shipper_id } = req.query;
 
 			const data = await orderServices(customer_id, shipper_id);
-			res.json({ data });
+			res.locals.data = data;
+
+			//chama middleware do log
+			next();
 		} catch (err: any) {
-//registra o error e exibe para o usuario
+			//registra o error e exibe para o usuario
 			const error = {
 				message: err.message,
 				code: 10,

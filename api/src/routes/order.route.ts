@@ -30,7 +30,8 @@ order.get(
 				error
 			});
 		}
-
+	res.locals.start_time = Date.now();
+//chama o controller
 		next();
 	},
 
@@ -38,14 +39,15 @@ order.get(
 
 	(req: Request, res: Response) => {
 		//mapear as informações
+const timestamp = Date.now();
 		const data = JSON.stringify({
 			method: req.method,
 			route: req.url,
 			status: res.statusCode,
-			time: Date.now(),
-			request: req.query,
-			timestamp: Date(),
-			response: ''
+			time: `${timestamp - res.locals.start_time}ms`,
+			request: req.body,
+			response: { data: res.locals.data},
+			timestamp
 		});
 
 		//criar um arquivo com as informações
@@ -57,6 +59,7 @@ order.get(
 				console.log('Saved!');
 			}
 		);
+res.json({ data_period: res.locals.data });
 	}
 );
 

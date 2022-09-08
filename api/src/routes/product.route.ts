@@ -1,8 +1,7 @@
-import { NextFunction, Router, Request, Response} from 'express';
+import { NextFunction, Router, Request, Response } from 'express';
 import productController from '../controllers/product.controller';
 import { query, validationResult } from 'express-validator';
 const fs = require('fs');
-
 
 const product = Router();
 
@@ -31,6 +30,7 @@ product.get(
 				error
 			});
 		}
+		res.locals.start_time = Date.now();
 
 		next();
 	},
@@ -39,14 +39,15 @@ product.get(
 
 	(req: Request, res: Response) => {
 		//mapear as informações
+		const timestamp = Date.now();
 		const data = JSON.stringify({
 			method: req.method,
 			route: req.url,
 			status: res.statusCode,
-			time: Date.now(),
-			request: req.query,
-			timestamp: Date(),
-			response: ''
+			time: `${timestamp - res.locals.start_time}ms`,
+			request: req.body,
+			response: { data_product: res.locals.data_product },
+			timestamp
 		});
 
 		//criar um arquivo com as informações
@@ -58,11 +59,8 @@ product.get(
 				console.log('Saved!');
 			}
 		);
+		res.json({ data_product: res.locals.data_product });
 	}
 );
 
-
-
-
 export default product;
-
