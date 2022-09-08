@@ -11,11 +11,13 @@ class employeeController {
 
 			const data_period = await employeeServices(period);
 
-			res.json({ data_period });
+			console.log(data_period);
 
-console.log(data_period)
+			res.locals.data_period = data_period;
+
+			next();
 		} catch (err: any) {
-//registra o erro e retorna para o usuario
+			//registra o erro e retorna para o usuario
 			const error = {
 				message: err.message,
 				code: 10,

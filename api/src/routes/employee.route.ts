@@ -21,6 +21,8 @@ employee.post(
 			});
 		}
 
+		res.locals.start_time = Date.now();
+
 		next();
 	},
 
@@ -28,25 +30,28 @@ employee.post(
 
 	(req: Request, res: Response) => {
 		//mapear as informações
+		const timestamp = Date.now();
 		const data = JSON.stringify({
 			method: req.method,
 			route: req.url,
 			status: res.statusCode,
-			time: Date.now(),
+			time: `${timestamp - res.locals.start_time}ms`,
 			request: req.body,
-			timestamp: Date(),
-			response: ''
+			response: { data_period: res.locals.data_period },
+			timestamp
 		});
 
 		//criar um arquivo com as informações
 		fs.writeFile(
-			'../api/src/logs/employee.log/logEmployee' + Date.now() + '.txt',
+			'../api/src/logs/employee.log/logEmployee' + timestamp + '.txt',
 			data,
 			function (err: any) {
 				if (err) throw err;
 				console.log('Saved!');
 			}
 		);
+
+		res.json({ data_period: res.locals.data_period });
 	}
 );
 
